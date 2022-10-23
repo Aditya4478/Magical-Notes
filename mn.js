@@ -1,39 +1,69 @@
+let details = navigator.userAgent;
+let regexp = /android|iphone|kindle|ipad/i;
+let isMobileDevice = regexp.test(details);
+if (isMobileDevice) {
+    document.write("You are using a Mobile Device. Please switch to Desktop View / open this site in you PC/Laptop");
+}else {
+
 // keep calling function shownotes to always disappear notes saved in local storage
 showNotes();
 
 //adding notes
 let addBtn = document.getElementById('addBtn');
 addBtn.addEventListener('click', function (e) {
+    var checkBox = document.getElementById("myCheck");
     let addTxt = document.getElementById('addTxt');
     let notes = localStorage.getItem('notes');
+    let times = localStorage.getItem('times');
+    let addTime = document.getElementById('addTime');
     if (notes == null) {
         notesObj = [];
     }
     else {
         notesObj = JSON.parse(notes);
     }
+    if (times == null) {
+        timesObj = [];
+    }
+    else {
+        timesObj = JSON.parse(times);
+    }
+    let dashed = "🥳No Limits..";
+    if(checkBox.checked == true){
+        timesObj.push(addTime.value);
+    }else{
+        timesObj.push(dashed);
+    }
     //showing alert if notes is empty & updating falsy statement inside the object.
-    if(addTxt.value==''){
+    if (addTxt.value == '') {
         alert('😠😒😤Do not press ADD button without writting any note. !!')
         addTxt.value = 'Empty Note 😥';
     }
     notesObj.push(addTxt.value);
     localStorage.setItem('notes', JSON.stringify(notesObj));
-    addTxt.value = "";
+    localStorage.setItem('times', JSON.stringify(timesObj));
     showNotes();
+    addTxt.value = "";
 });
 
 // for showing notes
+
 function showNotes() {
     let notes = localStorage.getItem('notes');
+    let times = localStorage.getItem('times');
     let html = "";
     if (notes == null) {
-        // creating first time
         notesObj = [];
     }
     else {
-        // a ranom creation of text inside object
         notesObj = JSON.parse(notes);
+    }
+
+    if (times == null) {
+        timesObj = [];
+    }
+    else {
+        timesObj = JSON.parse(times);
     }
     // updating in table
     notesObj.forEach(function (element, index) {
@@ -52,6 +82,7 @@ function showNotes() {
                   Delete
                 </button>
               </td>
+              <td align="center">${Object.values(timesObj)[index]}</td>
             </tr>`;
     });
     // if there are no notes available in object, then show message inside table
@@ -60,22 +91,31 @@ function showNotes() {
         notesElm.innerHTML = html;
     }
     else {
-        notesElm.innerHTML = `<tr><td colspan="3"><h6 style="text-align: center;">You have not added a single note &#128551;&#128556;&#128577;. Add them QUICKLY !!!</h6></td></tr>`;
+        notesElm.innerHTML = `<tr><td colspan="4"><h6 style="text-align: center;">You have not added a single note &#128551;&#128556;&#128577;. Add them QUICKLY !!!</h6></td></tr>`;
     }
 }
 
 //Deleting node from local storage
 function deleteNote(index) {
     let notes = localStorage.getItem('notes');
+    let times = localStorage.getItem('times');
     if (notes == null) {
         notesObj = [];
     }
     else {
         notesObj = JSON.parse(notes);
     }
+    if (times == null) {
+        timesObj = [];
+    }
+    else {
+        timesObj = JSON.parse(times);
+    }
     // deleting a part of whole object.
     notesObj.splice(index, 1);
+    timesObj.splice(index, 1);
     localStorage.setItem('notes', JSON.stringify(notesObj));
+    localStorage.setItem('times', JSON.stringify(timesObj));
     showNotes();
 }
 
@@ -88,16 +128,16 @@ function searchFun() {
     tr = table.getElementsByTagName("tr");
     for (i = 0; i < tr.length; i++) {
         // searching in 2nd column of table (total cloumn : 0,1,2 => 1st column)
-      td = tr[i].getElementsByTagName("td")[1];
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            //displaying matched values
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
+        td = tr[i].getElementsByTagName("td")[1];
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                //displaying matched values
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
         }
-      }
     }
 }
 
@@ -117,15 +157,22 @@ function save_func() {
           animation-fill-mode: forwards;
     `
     let notes = localStorage.getItem('notes');
+    let times = localStorage.getItem('times');
     if (notes == null) {
         notesObj = [];
     }
     else {
         notesObj = JSON.parse(notes);
     }
+    if (times == null) {
+        timesObj = [];
+    }
+    else {
+        timesObj = JSON.parse(times);
+    }
     //creating a message to be print along with the content fetched from local storage
     notesObj.forEach(function (element, index) {
-        data.push("Content of Note " + (index+1) +" is -->> "+ element);
+        data.push("Content of Note " + (index + 1) + " is -->> " + element + " & Deadline is <" + Object.values(timesObj)[index]);
     });
     var data_string = JSON.stringify(data);
     var file = new Blob([data_string], { type: "text" });
@@ -141,4 +188,18 @@ function save_func() {
     localStorage.clear();
 
     alert("Notes Saved Successfully")
+}
+
+function showDate() {
+    var checkBox = document.getElementById("myCheck");
+    var text = document.getElementById("text");
+    var add = document.getElementById("add");
+    if (checkBox.checked == true) {
+        add.style.display = "none";
+        text.style.display = "inline-block";
+    } else {
+        add.style.display = "inline-block";
+        text.style.display = "none";
+    }
+}
 }
