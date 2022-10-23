@@ -1,0 +1,118 @@
+/* Colour changing effect */
+.shadow:hover:after{
+    content: ' ';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    background: linear-gradient(45deg,#000000,#0000ff,#00ff00,#ffff00,#ff0000,#000000,#0000ff,#00ff00,#ffff00,#ff0000);
+    background-size: 500%;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    z-index: -1;
+    animation: animate 20s linear infinite;
+    filter: blur(20px);
+}
+/* animation frame of above effect */
+@keyframes animate{
+    0%{
+        background-position: 0 0;
+    }
+    50%{
+        background-position: 200% 0;
+    }
+    100%{
+        background-position: 0 0;
+    }
+}
+
+/* 1st Horizontal line */
+hr.style-one {
+    margin: auto;
+    width: 90%;
+    height: 30px;
+    border-style: solid;
+    border-color: rgb(0, 255, 30);
+    border-width: 6px 0 0 0;
+    border-radius: 20px;
+}
+hr.style-one:before {
+    display: block;
+    content: "";
+    height: 30px;
+    margin-top: -31px;
+    border-style: solid;
+    border-color: black;
+    border-width: 0px 0 5px 0;
+    border-radius: 20px;
+}
+
+/* 2nd & 3rd Horizontal line (middle)*/
+hr.style-two-three {
+    background-color: rgb(0, 255, 30);
+    height: 10px;
+    border-radius: 35px;
+}
+
+/* 4th Horizontal line (last)*/
+hr.style-four {
+    margin: auto auto 20px auto;
+    width: 90%;
+    height: 30px;
+    border-style: solid;
+    border-color: rgb(0, 255, 30);
+    border-width: 0 0 6px 0;
+    border-radius: 20px;
+}
+hr.style-four:before {
+
+    display: block;
+    content: "";
+    height: 30px;
+    margin-top: -31px;
+    border-style: solid;
+    border-color: black;
+    border-width: 10px 0 0 0;
+    border-radius: 20px;
+}
+
+/* formatting for table & textbox */
+#addTxt{
+    width: 100%;
+    height: 15vh;
+    padding-left: 12px;
+    padding-top: 10px;
+}
+table, th, td{
+    border: 1px solid;
+
+}
+
+
+
+/* <============== Aadarsh's CSS ==================================================================> */
+
+#myCheck {
+    transform: scale(1.5);
+    margin: .6rem 1rem .6rem .3rem;
+}
+
+/* <===============================================================================================> */
+
+
+
+/* animation frame for disappearing table content. Called onclick. So animation frame calling part is handled by javascript */
+@keyframes myAnimation{
+    0%{
+      opacity: 1;
+      transform: rotateX(90deg);
+    }
+    50%{
+        opacity: 0.5;
+        transform: rotateX(0deg);
+      }
+    100%{
+      display: none;
+      opacity: 0;
+      transform: rotateX(90deg);
+    }
+}
