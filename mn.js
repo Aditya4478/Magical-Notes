@@ -2,7 +2,7 @@ let details = navigator.userAgent;
 let regexp = /android|iphone|kindle|ipad/i;
 let isMobileDevice = regexp.test(details);
 if (isMobileDevice) {
-    document.write("You are using a Mobile Device. Please switch to Desktop View / open this site in you PC/Laptop");
+    alert("You are using a Mobile Device. Please switch to Desktop View / open this site in you PC/Laptop");
 }else {
 
 // keep calling function shownotes to always disappear notes saved in local storage
